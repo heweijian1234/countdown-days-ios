@@ -1,7 +1,7 @@
 import WidgetKit
 import SwiftUI
 
-// MARK: - 桌面小组件（systemSmall：单一倒数 / systemMedium：前 4 个事件）
+// MARK: - 桌面小组件（systemSmall：单一倒数 / systemMedium：前 4 个事件）——中文 UI
 struct CountdownEntry: TimelineEntry {
     let date: Date
     let events: [CountdownEvent]
@@ -10,7 +10,7 @@ struct CountdownEntry: TimelineEntry {
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> CountdownEntry {
         CountdownEntry(date: Date(), events: [
-            CountdownEvent(id: UUID(), title: "Anniversary", date: Date().addingTimeInterval(86400 * 14), repeatsYearly: true, emoji: "❤️")
+            CountdownEvent(id: UUID(), title: "纪念日", date: Date().addingTimeInterval(86400 * 14), repeatsYearly: true, emoji: "❤️")
         ])
     }
 
@@ -47,7 +47,7 @@ struct CountdownWidgetView: View {
                     Text("\(abs(ev.daysUntil))")
                         .font(.system(size: 44, weight: .heavy, design: .rounded))
                         .foregroundColor(.pink)
-                    Text(ev.daysUntil >= 0 ? "days" : "days ago")
+                    Text(ev.daysUntil >= 0 ? "天" : "天前")
                         .font(.caption2).foregroundColor(.secondary)
                     Text(ev.title)
                         .font(.caption.weight(.semibold))
@@ -58,7 +58,7 @@ struct CountdownWidgetView: View {
             } else {
                 VStack(spacing: 6) {
                     Image(systemName: "calendar.badge.clock").foregroundColor(.pink)
-                    Text("Add a countdown").font(.caption2).foregroundColor(.secondary)
+                    Text("添加倒数").font(.caption2).foregroundColor(.secondary)
                 }
             }
         }
@@ -70,7 +70,7 @@ struct CountdownWidgetView: View {
             if entry.events.isEmpty {
                 VStack(spacing: 6) {
                     Image(systemName: "calendar.badge.clock").foregroundColor(.pink)
-                    Text("Add a countdown").font(.caption).foregroundColor(.secondary)
+                    Text("添加倒数").font(.caption).foregroundColor(.secondary)
                 }
             } else {
                 VStack(spacing: 6) {
@@ -85,7 +85,7 @@ struct CountdownWidgetView: View {
                             Text("\(abs(ev.daysUntil))")
                                 .font(.callout.bold())
                                 .foregroundColor(.pink)
-                            Text("d")
+                            Text("天")
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -116,8 +116,8 @@ struct CountdownWidget: Widget {
         StaticConfiguration(kind: "CountdownWidget", provider: Provider()) { entry in
             CountdownWidgetView(entry: entry)
         }
-        .configurationDisplayName("Countdown")
-        .description("Days until the moments that matter.")
+        .configurationDisplayName("倒数小组件")
+        .description("距离重要日子还有几天，一目了然。")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

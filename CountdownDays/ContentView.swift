@@ -1,6 +1,6 @@
 import SwiftUI
 
-// 主页：事件列表 + 添加（英文上架版——小组件无中文测试期，直接英文：健哥不深度测试此 App，走 G/H 教训直接英文省一轮）
+// 主页：事件列表 + 添加（中文 UI——2026-11-07 健哥令：两 App 改中文给健哥真机测试）
 struct ContentView: View {
     @State private var events: [CountdownEvent] = EventStore.load()
     @State private var showAdd = false
@@ -14,9 +14,9 @@ struct ContentView: View {
                         Image(systemName: "calendar.badge.clock")
                             .font(.system(size: 52))
                             .foregroundColor(.pink)
-                        Text("Count the days that matter")
+                        Text("记住重要的日子")
                             .font(.headline)
-                        Text("Anniversaries, birthdays, trips — see them on your Home Screen widget.")
+                        Text("纪念日、生日、旅行——在桌面小组件上一目了然。")
                             .font(.footnote)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -35,7 +35,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Countdown Days")
+            .navigationTitle("倒数日")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -70,7 +70,7 @@ struct EventRow: View {
                 .background(Circle().fill(Color.pink.opacity(0.12)))
             VStack(alignment: .leading, spacing: 3) {
                 Text(event.title).font(.subheadline.weight(.semibold))
-                Text(event.date.formatted(.dateTime.year().month().day()) + (event.repeatsYearly ? " · every year" : ""))
+                Text(event.date.formatted(.dateTime.year().month().day()) + (event.repeatsYearly ? " · 每年循环" : ""))
                     .font(.caption).foregroundColor(.secondary)
             }
             Spacer()
@@ -78,7 +78,7 @@ struct EventRow: View {
                 Text("\(abs(event.daysUntil))")
                     .font(.title2.bold())
                     .foregroundColor(.pink)
-                Text(event.daysUntil >= 0 ? "days left" : "days ago")
+                Text(event.daysUntil >= 0 ? "天后" : "天前")
                     .font(.caption2).foregroundColor(.secondary)
             }
         }
@@ -97,13 +97,13 @@ struct EventEditor: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("What are you counting down to?") {
-                    TextField("Anniversary, birthday, trip…", text: $title)
-                    DatePicker("Date", selection: $date, displayedComponents: .date)
-                    Toggle("Repeats every year", isOn: $repeats)
+                Section("你在倒数哪个日子？") {
+                    TextField("纪念日、生日、旅行…", text: $title)
+                    DatePicker("日期", selection: $date, displayedComponents: .date)
+                    Toggle("每年循环", isOn: $repeats)
                 }
-                Section("Icon") {
-                    Picker("Icon", selection: $emoji) {
+                Section("图标") {
+                    Picker("图标", selection: $emoji) {
                         ForEach(EventStore.emojiOptions, id: \.self) { e in
                             Text(e).tag(e)
                         }
@@ -111,20 +111,20 @@ struct EventEditor: View {
                     .pickerStyle(.inline)
                     .labelsHidden()
                 }
-                Section("Home Screen widget") {
-                    Text("After saving, touch and hold your Home Screen → ＋ → Countdown Widget.")
+                Section("桌面小组件") {
+                    Text("保存后，长按桌面 → ＋ → 搜索「倒数小组件」。")
                         .font(.caption).foregroundColor(.secondary)
                 }
             }
-            .navigationTitle("New countdown")
+            .navigationTitle("新建倒数")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { onSave(nil) }
+                    Button("取消") { onSave(nil) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        let ev = CountdownEvent(id: UUID(), title: title.isEmpty ? "Special day" : title,
+                    Button("保存") {
+                        let ev = CountdownEvent(id: UUID(), title: title.isEmpty ? "重要的日子" : title,
                                                 date: date, repeatsYearly: repeats, emoji: emoji)
                         onSave(ev)
                     }

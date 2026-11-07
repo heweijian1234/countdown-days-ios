@@ -23,7 +23,7 @@ targets:
     info:
       path: CountdownDays/Info.plist
       properties:
-        CFBundleDisplayName: Countdown Days
+        CFBundleDisplayName: 倒数日
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         UILaunchScreen:
@@ -53,7 +53,7 @@ targets:
     info:
       path: CountdownWidget/Info.plist
       properties:
-        CFBundleDisplayName: Countdown Widget
+        CFBundleDisplayName: 倒数小组件
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         NSExtension:
