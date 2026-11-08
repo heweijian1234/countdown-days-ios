@@ -151,7 +151,7 @@ struct EventEditor: View {
                     DatePicker("日期", selection: $date, displayedComponents: .date)
                         .onChange(of: date) { newDate in
                             // 健哥令①：选日期自动猜节日（只在新建设置一次，不覆盖手动选择）
-                            if !autoGuessDone, existing == nil, let g = Holidays.guess(date: newDate) {
+                            if !autoGuessDone, existing == nil, let g = Holidays.guess(date: newDate, repeatsYearly: repeats) {
                                 holiday = g.0
                                 emoji = g.1
                                 autoGuessDone = true
