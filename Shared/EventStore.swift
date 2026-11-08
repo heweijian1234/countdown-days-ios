@@ -153,15 +153,16 @@ enum EventReminder {
                 let today = cal.startOfDay(for: Date())
                 var comps = cal.dateComponents([.month, .day], from: event.date)
                 comps.year = cal.component(.year, from: today)
-                if let d = cal.date(from: comps), d >= today {
+                let thisYear = cal.date(from: comps)
+                if let d = thisYear, d >= today {
                     target = d
-                } else if let next = cal.date(byAdding: .year, value: 1, to: d ?? event.date) {
+                } else if let next = cal.date(byAdding: .year, value: 1, to: thisYear ?? event.date) {
                     target = next
                 }
             }
-            guard let trigger = cal.date(byAdding: .day, value: -days, to: cal.startOfDay(for: target)) else { continue }
+            guard let fire0 = cal.date(byAdding: .day, value: -days, to: cal.startOfDay(for: target)) else { continue }
             // 通知时间=当天早上 9:00
-            var comps = cal.dateComponents([.year, .month, .day], from: trigger)
+            var comps = cal.dateComponents([.year, .month, .day], from: fire0)
             comps.hour = 9
             comps.minute = 0
             guard let fire = cal.date(from: comps), fire > Date() else { continue }
