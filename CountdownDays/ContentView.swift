@@ -159,8 +159,8 @@ struct EventEditor: View {
                         }
                     Toggle("每年循环", isOn: $repeats)
                 }
-                // 节日（健哥令①：仪式感）
-                Section("节日关联（可选）") {
+                // 节日（健哥令①：仪式感——图标栏已取消，emoji 随节日自动带）
+                Section("节日关联") {
                     Picker("节日", selection: $holiday) {
                         Text("不关联节日").tag("")
                         ForEach(Holidays.allOptions, id: \.0) { name, e in
@@ -173,15 +173,6 @@ struct EventEditor: View {
                             emoji = opt.1
                         }
                     }
-                }
-                Section("图标") {
-                    Picker("图标", selection: $emoji) {
-                        ForEach(EventStore.emojiOptions, id: \.self) { e in
-                            Text(e).tag(e)
-                        }
-                    }
-                    .pickerStyle(.inline)
-                    .labelsHidden()
                 }
                 // 准备清单（健哥令②）
                 Section("准备清单（可选）") {
